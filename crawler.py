@@ -87,6 +87,7 @@ while True:
         # logging.error(traceback.format_exc())
         sys.exit(-100)
 
+
     except Exception:
         # 프로그램 종료 메세지 조립
         message = '\n\n[🚨❌🚨종료🚨❌🚨]'
