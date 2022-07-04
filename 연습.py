@@ -32,7 +32,6 @@ def cvt_datetime(obj):
 message = '\n\n[🟣🟣 시작 안내 🟣🟣]'
 message = message + '\n\n notice_bot 시작! '
 message = message + '\n\n- 현재시간:' + str(datetime.today().strftime('%Y-%m-%d %H:%M:%S'))
-
 # 프로그램 시작 메세지 발송
 notice_module.send_telegram_message(message)
 
@@ -89,6 +88,7 @@ while True:
         # logging.error(traceback.format_exc())
         sys.exit(-100)
 
+
     except Exception:
         # 프로그램 종료 메세지 조립
         message = '\n\n[🚨❌🚨종료🚨❌🚨]'
@@ -101,66 +101,6 @@ while True:
         # logging.error("Exception 발생!")
         # logging.error(traceback.format_exc())
         sys.exit(-200)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 # import requests
 # import sys
