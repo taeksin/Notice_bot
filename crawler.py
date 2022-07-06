@@ -66,6 +66,7 @@ while True:
                 message = '\n\n[🔴📝 새로운 공지사항 📝🔴]'
                 message = message +'\n\n['+title[i]+']'
                 message = message + '\n['+link[i]+']'
+                message = message + '\n[ 등록시간 : '+str(pub_time[i])+']'
                 notice_module.send_telegram_message(message)
             # 텔레그램 전송
             std_post_time=recent_post_time
@@ -86,7 +87,6 @@ while True:
         # logging.error("KeyboardInterrupt Exception 발생!")
         # logging.error(traceback.format_exc())
         sys.exit(-100)
-
 
     except Exception:
         # 프로그램 종료 메세지 조립
