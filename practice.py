@@ -55,7 +55,7 @@ while True:
             # for문 안에서 new_post가 몇개인지 분석하기 인덱스번호 추출
             num=pub_time.index(std_post_time)
             for i in reversed(range(num)):
-                message = '\n\n[🔴📝 새로운 공지사항 📝🔴]'
+                message = '\n\n[🔴📝 NEW 공지 📝🔴]'
                 message = message +'\n\n['+title[i]+']'
                 message = message + '\n['+link[i]+']'
                 message = message + '\n[ 등록시간 : '+str(pub_time[i])+']'
@@ -70,8 +70,7 @@ while True:
         
     except KeyboardInterrupt:
         # 프로그램 종료 메세지 조립
-        message = '\n\n[🚨❌🚨종료🚨❌🚨]'
-        message = message + '\n\n notice_bot 종료!'
+        message = '\n\n[🚨❌🚨notice_bot 종료🚨❌🚨]'
         message = message + '\n\n KeyboardInterrupt Exception 발생!'
         message = message + '\n\n- 현재시간:' + str(datetime.today().strftime('%Y-%m-%d %H:%M:%S'))
         
@@ -81,9 +80,8 @@ while True:
 
     except Exception:
         # 프로그램 종료 메세지 조립
-        message = '\n\n[🚨❌🚨종료🚨❌🚨]'
-        message = message + '\n\n notice_bot 종료!'
-        message = message + '\n\n Exception 발생!'
+        message = '\n\n[🚨❌🚨notice_bot 종료🚨❌🚨]'
+        message = message + '\n\n Exception !'
         message = message + '\n\n- 현재시간:' + str(datetime.today().strftime('%Y-%m-%d %H:%M:%S'))
         
         # # 프로그램 종료 메세지 발송
