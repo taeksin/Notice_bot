@@ -60,7 +60,7 @@ while True:
             std_post_time=recent_post_time
         else:
             print("새로운 공지가 없음 - "+str(now.strftime('%Y-%m-%d %H:%M:%S')))
-        time.sleep(300)   # 코드 완성하면 300으로 바꾸기
+        time.sleep(5)   # 코드 완성하면 300으로 바꾸기
         # └ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ 시 간 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ┘
         
     except KeyboardInterrupt:
