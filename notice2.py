@@ -1,12 +1,8 @@
-import os
-import sys
-import time
-import requests
-from notice import Notice
 from http.client import HTTPException
 from bs4 import BeautifulSoup 
-from module import notice_module
-sys.path.append(os.path.dirname(os.path.dirname(__file__)))
+
+import requests
+from notice import Notice
 
 BASE_URL = "https://www.hansung.ac.kr/"
 REQUEST_URL = BASE_URL + "hansung/8385/subview.do"
@@ -49,57 +45,21 @@ def scrapeNotices() -> list[Notice]:
             break
     
     return result
-def find_new_post(std):
-    with open("IDS.txt") as f:
-        lines = f.read().splitlines()
-    print("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ")
-    print(lines)
-    print("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ")
-    count=0
-    for line in lines:
-        # print("mmmmmmmmmmmmmmmmmmmmmmmm")
-        # print(line)
-        if int(std) < int(line):
-            count=count+1
-    return count
+# def find_new_post(std_ID) -> int:
+#     print("1")
 
-# std 새로고침 
-def std_F5():
-    f = open("IDS.txt", 'r')
-    std2=f.readline()
-    f.close()
-    f = open("std.txt", 'w')
-    f.write(std2)
-    f.close()
-
-
-while True:
-    
-    f = open("std.txt", 'r')
-    std = f.readline()
-    f.close()
-
+# 테스트용 코드
+if __name__ == "__main__":
     testResult = scrapeNotices()
     f = open("IDS.txt", 'w')
     for it in testResult:
         f.write(it.id)
         f.write("\n")
-        print("mㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ")
         print(it.id)
     f.close()
-    # print(testResult[0].title)
-    # print(testResult[0].id)
-    # print(testResult[0].url)
-    index=find_new_post(std)
-    std_F5()
-    if index>0:
-        for i in reversed(range(int(index))):
-            message = '\n\n[🔴📝 NEW 공지 📝🔴]'
-            message = message +'\n\n['+testResult[i].title+']'
-            message = message + '\n['+testResult[i].url+']'
-            notice_module.send_telegram_message(message)
-            time.sleep(2)
-            print(testResult[i].title)
-            print(testResult[i].url)
-    else:
-        print("새로운 게시물이 없다")
+    print(testResult[0].title)
+    print(testResult[0].id)
+    print(testResult[0].url)
+        # print(it.title)
+        # print(it.url)
+    
