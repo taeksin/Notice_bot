@@ -85,13 +85,13 @@ while True:
         f.write(it.id)
         f.write("\n")
         print("mㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ")
-        #print(it.id)
+        print(it.id)
     f.close()
     # print(testResult[0].title)
     # print(testResult[0].id)
     # print(testResult[0].url)
     index=find_new_post(std)
-    #std_F5()
+    std_F5()
     if index>0:
         for i in reversed(range(int(index))):
             message = '\n\n[🔴📝 NEW 공지 📝🔴]'
@@ -101,6 +101,5 @@ while True:
             time.sleep(2)
             print(testResult[i].title)
             print(testResult[i].url)
-        std_F5()
     else:
         print("새로운 게시물이 없다")

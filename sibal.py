@@ -1,10 +1,9 @@
-import os
-import sys
-import time
-import requests
-from notice import Notice
 from http.client import HTTPException
 from bs4 import BeautifulSoup 
+import os
+import sys
+import requests
+from notice import Notice
 from module import notice_module
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 
@@ -49,6 +48,9 @@ def scrapeNotices() -> list[Notice]:
             break
     
     return result
+
+
+
 def find_new_post(std):
     with open("IDS.txt") as f:
         lines = f.read().splitlines()
@@ -61,21 +63,22 @@ def find_new_post(std):
         # print(line)
         if int(std) < int(line):
             count=count+1
+    
     return count
-
-# std 새로고침 
+# std 새로  고침 완성
 def std_F5():
+    
     f = open("IDS.txt", 'r')
     std2=f.readline()
     f.close()
-    f = open("std.txt", 'w')
+    f = open("stdstd.txt", 'w')
     f.write(std2)
     f.close()
 
 
 while True:
     
-    f = open("std.txt", 'r')
+    f = open("stdstd.txt", 'r')
     std = f.readline()
     f.close()
 
@@ -85,22 +88,18 @@ while True:
         f.write(it.id)
         f.write("\n")
         print("mㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ")
-        #print(it.id)
+        print(it.id)
     f.close()
     # print(testResult[0].title)
     # print(testResult[0].id)
     # print(testResult[0].url)
     index=find_new_post(std)
-    #std_F5()
-    if index>0:
-        for i in reversed(range(int(index))):
-            message = '\n\n[🔴📝 NEW 공지 📝🔴]'
-            message = message +'\n\n['+testResult[i].title+']'
-            message = message + '\n['+testResult[i].url+']'
-            notice_module.send_telegram_message(message)
-            time.sleep(2)
-            print(testResult[i].title)
-            print(testResult[i].url)
-        std_F5()
-    else:
-        print("새로운 게시물이 없다")
+    std_F5()
+        
+    for i in reversed(range(int(index))):
+        message = '\n\n[🔴📝 NEW 공지 📝🔴]'
+        message = message +'\n\n['+testResult[i].title+']'
+        message = message + '\n['+testResult[i].url+']'
+        notice_module.send_telegram_message(message)
+        print(testResult[i].title)
+        print(testResult[i].url)
