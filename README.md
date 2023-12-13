@@ -1,6 +1,6 @@
 
 <img src="https://capsule-render.vercel.app/api?type=waving&color=54aeff&height=150&section=header" />
-![Anurag's GitHub stats](https://github-readme-stats.vercel.app/api?username=taeksin&show_icons=true&theme=radical)
+#![Anurag's GitHub stats](https://github-readme-stats.vercel.app/api?username=taeksin&show_icons=true&theme=radical)
 
 
 [![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=taeksin)](https://github.com/anuraghazra/github-readme-stats)
