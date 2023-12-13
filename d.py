@@ -4,7 +4,7 @@ import time
 import requests
 from notice import Notice
 from http.client import HTTPException
-from bs4 import BeautifulSoup 
+from bs4 import BeautifulSoup
 from module import notice_module
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 
@@ -12,8 +12,10 @@ BASE_URL = "https://www.hansung.ac.kr/"
 REQUEST_URL = BASE_URL + "hansung/8385/subview.do"
 
 # href를 id로 변환
+
 def extractNumberFrom(string: str) -> int:
     return int(''.join(filter(str.isdigit, string)))
+
 
 def scrapeNotices() -> list[Notice]:
     r"""
@@ -27,7 +29,8 @@ def scrapeNotices() -> list[Notice]:
         soup = BeautifulSoup(response.text, "html.parser")
 
         if response.status_code is not requests.codes['ok']:
-            raise HTTPException('잘못된 URL을 요청했습니다. (status code: {response.status_code})')
+            raise HTTPException(
+                '잘못된 URL을 요청했습니다. (status code: {response.status_code})')
     except Exception as e:
         raise e
 
@@ -40,33 +43,36 @@ def scrapeNotices() -> list[Notice]:
 
         subject = tableRow.select_one('.td-subject > a[href]')
         href = subject['href']
-        
+
         id = str(extractNumberFrom(href))
         title = subject.text.strip()
         url = BASE_URL + href.removeprefix("/")
         result.append(Notice(id, title, url))
         if result.__len__() == 10:
             break
-    
+
     return result
+
+
 def find_new_post(std):
     with open("IDS.txt") as f:
         lines = f.read().splitlines()
     print("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ")
     print(lines)
     print("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ")
-    count=0
+    count = 0
     for line in lines:
         # print("mmmmmmmmmmmmmmmmmmmmmmmm")
         # print(line)
         if int(std) < int(line):
-            count=count+1
+            count = count+1
     return count
 
-# std 새로고침 
+# std 새로고침
+
 def std_F5():
     f = open("IDS.txt", 'r')
-    std2=f.readline()
+    std2 = f.readline()
     f.close()
     f = open("std.txt", 'w')
     f.write(std2)
@@ -74,7 +80,7 @@ def std_F5():
 
 
 while True:
-    
+
     f = open("std.txt", 'r')
     std = f.readline()
     f.close()
@@ -85,18 +91,18 @@ while True:
         f.write(it.id)
         f.write("\n")
         print("mㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ")
-        #print(it.id)
+        # print(it.id)
     f.close()
     # print(testResult[0].title)
     # print(testResult[0].id)
     # print(testResult[0].url)
-    index=find_new_post(std)
-    #std_F5()
-    if index>0:
+    index = find_new_post(std)
+    # std_F5()
+    if index > 0:
         for i in reversed(range(int(index))):
             message = '\n\n[🔴📝 NEW 공지 📝🔴]'
-            message = message +'\n\n['+testResult[i].title+']'
-            message = message + '\n['+testResult[i].url+']'
+            message = message + '\n\n['+testResult[i].title+']'
+            # message = message + '\n['+testResult[i].url+']'
             notice_module.send_telegram_message(message)
             time.sleep(2)
             print(testResult[i].title)

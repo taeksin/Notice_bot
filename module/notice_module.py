@@ -16,8 +16,8 @@ from datetime import datetime
 from ast import literal_eval
 
 # Telegram Keys
-telegram_token = '5599430717:AAEUS_DsOPeL1k3nHoR8VzKAbT3BfE1GvC8'
-telegram_id = '-1001609089896'
+telegram_token = ''
+telegram_id = ''
 
 # -----------------------------------------------------------------------------
 # - Name : set_loglevel
@@ -84,9 +84,9 @@ def send_telegram_message(message):
         # 텔레그램 메세지 발송
         bot = telegram.Bot(telegram_token)
         res = bot.sendMessage(chat_id=telegram_id, text=message)
- 
+
         return res
- 
+
     # ----------------------------------------
     # 모든 함수의 공통 부분(Exception 처리)
     # ----------------------------------------
