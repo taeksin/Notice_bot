@@ -10,9 +10,9 @@
 
 ## 실행화면
 <p align="center">
-  <img src="https://github.com/taeksin/Notice_bot/assets/90402009/cc3c578c-bc2a-48aa-8447-c221306d91e5" width="300" height="200"/>
-  <img src="https://github.com/taeksin/Notice_bot/assets/90402009/3c8d1a8f-b4c2-4cfc-afdf-40f034dd4724" width="300" height="200"/>
-  <img src="https://github.com/taeksin/Notice_bot/assets/90402009/d164dcd5-15db-4cf7-b140-78bac3516e37" width="300" height="200"/>
+  <img src="https://github.com/taeksin/Notice_bot/assets/90402009/cc3c578c-bc2a-48aa-8447-c221306d91e5" width="800" height="600"/>
+  <img src="https://github.com/taeksin/Notice_bot/assets/90402009/3c8d1a8f-b4c2-4cfc-afdf-40f034dd4724" width="800" height="600"/>
+  <img src="https://github.com/taeksin/Notice_bot/assets/90402009/d164dcd5-15db-4cf7-b140-78bac3516e37" width="800" height="600"/>
 </p>
 
 
