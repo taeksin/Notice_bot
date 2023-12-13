@@ -1,3 +1,4 @@
+![Anurag's GitHub stats](https://github-readme-stats.vercel.app/api?username=taeksin&show_icons=true&theme=radical)
 <img src="https://capsule-render.vercel.app/api?type=waving&color=54aeff&height=150&section=header" />
 [![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=taeksin)](https://github.com/anuraghazra/github-readme-stats)
 # Notice_Bot
