@@ -87,14 +87,14 @@ def Hansung_scrapeNotices():
     return result
 
 
-def count_new_post(hansungLastkey, hansung_id_list ):
+def count_new_post(Lastkey, id_list ):
 
     print("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ")
     print("id_list: "+str(hansung_id_list))
     print("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ")
     count = 0
-    for hansung_id in hansung_id_list:
-        if int(hansungLastkey) < int(hansung_id):
+    for id in id_list:
+        if int(Lastkey) < int(id):
             count = count+1
     return count
 
@@ -131,10 +131,10 @@ def Computer_scrapeNotices():
         result.append(Notice(id, title, url))
         if result.__len__() == 10:
             break
-          
+        
     # ID를 기준으로 내림차순 정렬
     result.sort(key=lambda x: int(x.id), reverse=True)
-              
+            
     return result
 
 
@@ -171,12 +171,12 @@ while True:
 
             Hansung_notice_title = Hansung_Result[i].title.replace('\t', '').replace('\n', '')
             Hansung_notice_url = str(Hansung_Result[i].url)
+            
             # 해당 데이터가 없으면 생성한다.
             Hansung_ref.update({Hansung_Result[i].id: {'title': Hansung_Result[i].title, 'url': Hansung_Result[i].url, 'time': formatted_timestamp}})
             print(f"ID: {Hansung_Result[i].id} / Title: {Hansung_notice_title} / URL: {Hansung_Result[i].url} ")
             print(" -> DB 저장 완료\n")
             
-          
             message = {'content': ''}
             new_content = "🔴📝 NEW 한성 공지 📝 🔴\n"+ Hansung_notice_title+"\n"+Hansung_notice_url
             message['content'] += new_content
