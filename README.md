@@ -54,19 +54,26 @@
 
   ```bash
   pip install requests beautifulsoup4 firebase-admin
-</li>
-<li><code>server_multi_crawler3.py</code> 파일을 실행하세요:
-  <code>python server_multi_crawler3.py</code>
-</li>
+  </li>
+  <li><code>server_multi_crawler3.py</code> 파일을 실행하세요:
+    <code>python server_multi_crawler3.py</code>
+  </li>
 </ol>
+
+
 <p>프로그램이 실행되면 주기적으로 한성대학교 및 컴퓨터공학부의 공지사항을 크롤링하여 디스코드로 알림을 보내줍니다.</p>
+
 <h2>주의사항</h2>
+
 <ul>
   <li>이 프로젝트는 개인적인 용도로 제작되었으며, 상업적인 목적으로 사용될 수 없습니다.</li>
   <li>공지사항 크롤링 시 서버에 부하를 줄 수 있으므로 적절한 주기로 실행하세요.</li>
   <li>코드 및 설정 파일에는 개인 정보가 포함되어 있으므로 공개 저장소에 올리기 전에 주의하세요.</li>
 </ul>
+
+
 <p>이 프로젝트는 개인 학습 및 흥미로 제작되었으며 어떠한 상황에서도 악용되어서는 안됩니다.</p>
 </body>
 </html>
+
 <img src="https://capsule-render.vercel.app/api?type=waving&color=54aeff&height=150&section=footer" />
