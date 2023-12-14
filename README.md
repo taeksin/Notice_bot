@@ -51,9 +51,7 @@
 <ol>
   <li>Python 3.x를 설치하세요.</li>
   <li>필요한 라이브러리를 설치하기 위해 터미널에서 다음 명령어를 실행하세요:
-
-  ```bash
-  pip install requests beautifulsoup4 firebase-admin
+  <code> pip install requests beautifulsoup4 firebase-admin</code>
   </li>
   <li><code>server_multi_crawler3.py</code> 파일을 실행하세요:
     <code>python server_multi_crawler3.py</code>
