@@ -1,0 +1,5 @@
+nohup python3 practice.py &
+
+ps ux
+
+kill -9 
