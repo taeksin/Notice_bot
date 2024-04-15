@@ -1,0 +1,9 @@
+nohup python3 practice.py &
+
+ps ux
+
+kill -9 
+
+nohup python3 server_multi_crawler3.py &
+
+ps ax | grep .py  실행중인 프로그램 목록
