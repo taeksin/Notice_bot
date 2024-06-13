@@ -23,6 +23,7 @@ sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 with open('config.yaml', encoding='UTF-8') as f:
     config = yaml.load(f, Loader=yaml.FullLoader)
 DISCORD_WEBHOOK_URL = config['DISCORD_WEBHOOK_URL']
+FIREBASE_DB_URL = config['FIREBASE_DB_URL']
 
 Hansung_BASE_URL = "https://www.hansung.ac.kr/"
 Hansung_REQUEST_URL = Hansung_BASE_URL + "hansung/8385/subview.do"
@@ -32,7 +33,7 @@ Computer_REQUEST_URL = Computer_BASE_URL + "news?searchCondition"
 # Firebase database 인증 및 앱 초기화
 cred = credentials.Certificate('notice_bot.json')
 firebase_admin.initialize_app(cred, {
-    'databaseURL': 'https://notice-bot-bbf3c-default-rtdb.firebaseio.com/'
+    'databaseURL': FIREBASE_DB_URL
 })
 
 

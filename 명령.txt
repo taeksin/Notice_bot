@@ -5,5 +5,6 @@ ps ux
 kill -9 
 
 nohup python3 server_multi_crawler3.py &
+nohup python3 noticeWatcher.py &
 
 ps ax | grep .py  실행중인 프로그램 목록
