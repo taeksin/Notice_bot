@@ -11,3 +11,4 @@ ps ax | grep .py  실행중인 프로그램 목록
 source myenv/bin/activate
 
 nohup python3 work_watcher.py &
+nohup python3 work_notice.py &
