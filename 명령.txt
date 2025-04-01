@@ -8,3 +8,6 @@ nohup python3 server_multi_crawler3.py &
 nohup python3 noticeWatcher.py &
 
 ps ax | grep .py  실행중인 프로그램 목록
+source myenv/bin/activate
+
+nohup python3 work_watcher.py &
