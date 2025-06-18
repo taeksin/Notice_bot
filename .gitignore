@@ -20,3 +20,5 @@ log/
 # # 예외
 # !제외할 파일명.txt
 
+notice_env/
+nohup.out
