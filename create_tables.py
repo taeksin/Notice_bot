@@ -168,7 +168,7 @@ async def create_tables_async():
         # 키워드 데이터 초기화 및 삽입
         keyword_list = [
             '개발', '소프트웨어', 'AI', 'SW', 'QA',
-            'FRONT', 'BACKEND', '프론트', '백엔드', 'FULLSTACK', '풀스택'
+            'FRONT', 'BACKEND', '프론트', '백엔드', 'FULLSTACK', '풀스택', 'LLM', 'RAG', 'leaning'
         ]
 
         await pool.execute("DELETE FROM notice_bot.work_keywords;")
