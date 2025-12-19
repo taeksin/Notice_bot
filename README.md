@@ -58,6 +58,19 @@
   </li>
 </ol>
 
+<h2>데몬(백그라운드) 실행</h2>
+
+<p><code>work_notice.py</code>를 백그라운드로 실행/중지/상태확인 하려면 루트의 <code>daemon.sh</code>를 사용하세요.</p>
+
+<ul>
+  <li><code>chmod +x daemon.sh</code></li>
+  <li>시작: <code>./daemon.sh start</code></li>
+  <li>중지: <code>./daemon.sh stop</code></li>
+  <li>상태: <code>./daemon.sh status</code></li>
+  <li>로그(app): <code>./daemon.sh log</code> 또는 <code>./daemon.sh log 500</code></li>
+  <li>로그(nohup): <code>./daemon.sh log nohup</code> 또는 <code>./daemon.sh log nohup 500</code></li>
+</ul>
+
 
 <p>프로그램이 실행되면 주기적으로 한성대학교 및 컴퓨터공학부의 공지사항을 크롤링하여 디스코드로 알림을 보내줍니다.</p>
 

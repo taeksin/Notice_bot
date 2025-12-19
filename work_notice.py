@@ -1,56 +1,12 @@
-import os
-import time
-import requests
 import yaml
-import logging
 import asyncio
 import aiohttp
 from datetime import datetime
 from bs4 import BeautifulSoup
-from logging.handlers import TimedRotatingFileHandler
 from pg_config_connect import get_pg_pool
+from custom_logger import get_logger
 
-# ---------------------------
-# 사용자 정의 날짜 기반 FileHandler
-# ---------------------------
-class DateBasedFileHandler(logging.FileHandler):
-    def __init__(self, directory, filename_format, encoding=None, delay=False):
-        self.directory = directory
-        self.filename_format = filename_format
-        self.current_date = datetime.now().strftime("%Y_%m_%d")
-        if not os.path.exists(self.directory):
-            os.makedirs(self.directory)
-        filename = os.path.join(self.directory, self.filename_format.format(date=self.current_date))
-        super().__init__(filename, mode="a", encoding=encoding, delay=delay)
-
-    def emit(self, record):
-        new_date = datetime.now().strftime("%Y_%m_%d")
-        if new_date != self.current_date:
-            self.current_date = new_date
-            self.acquire()
-            try:
-                self.close()
-                new_filename = os.path.join(self.directory, self.filename_format.format(date=new_date))
-                self.baseFilename = os.path.abspath(new_filename)
-                self.stream = self._open()
-            finally:
-                self.release()
-        super().emit(record)
-
-# ---------------------------
-# 로그 설정
-# ---------------------------
-log_formatter = logging.Formatter('%(asctime)s - [%(levelname)s] - %(message)s')
-logger = logging.getLogger()
-logger.setLevel(logging.INFO)
-
-console_handler = logging.StreamHandler()
-console_handler.setFormatter(log_formatter)
-logger.addHandler(console_handler)
-
-file_handler = DateBasedFileHandler("log", "{date}_work.log", encoding="utf-8")
-file_handler.setFormatter(log_formatter)
-logger.addHandler(file_handler)
+logger = get_logger()
 
 # ---------------------------
 # 설정 로드
@@ -67,7 +23,7 @@ async def get_keywords():
     try:
         keywords_list = await pool.fetch("SELECT keyword FROM notice_bot.work_keywords")
         keywords_list = [row['keyword'].lower() for row in keywords_list]
-        logging.info(f"DB에서 가져온 키워드: {keywords_list}")
+        logger.info(f"DB에서 가져온 키워드: {keywords_list}")
         return keywords_list
     finally:
         await pool.close()
@@ -80,9 +36,9 @@ async def send_discord_alert(message_content):
     async with aiohttp.ClientSession() as session:
         async with session.post(DISCORD_WEBHOOK_URL, data=message) as response:
             if response.status not in (200, 204):
-                logging.error(f"디스코드 웹훅 전송 실패: {response.status}")
+                logger.error(f"디스코드 웹훅 전송 실패: {response.status}")
             else:
-                logging.info("디스코드 웹훅 전송 성공")
+                logger.info("디스코드 웹훅 전송 성공")
 
 # ---------------------------
 # 채용 정보 크롤링
@@ -91,14 +47,14 @@ async def fetch_work_data(url):
     async with aiohttp.ClientSession() as session:
         async with session.get(url) as response:
             if response.status != 200:
-                logging.error(f"URL 요청 실패, 상태 코드: {response.status} / URL: {url}")
+                logger.error(f"URL 요청 실패, 상태 코드: {response.status} / URL: {url}")
                 return []
             
             html = await response.text()
             soup = BeautifulSoup(html, 'html.parser')
             table_ul = soup.find('ul', {'data-role': 'table', 'class': 'black'})
             if not table_ul:
-                logging.error("지정한 테이블 요소를 찾을 수 없습니다.")
+                logger.error("지정한 테이블 요소를 찾을 수 없습니다.")
                 return []
 
             tbody_items = table_ul.select("li.tbody, li.tbody.notice")
@@ -149,7 +105,7 @@ async def check_work_type(url, keywords):
         async with aiohttp.ClientSession() as session:
             async with session.get(url) as response:
                 if response.status != 200:
-                    logging.error(f"게시글 URL 요청 실패 (상태 코드: {response.status})")
+                    logger.error(f"게시글 URL 요청 실패 (상태 코드: {response.status})")
                     return None
                 
                 html = await response.text()
@@ -161,8 +117,8 @@ async def check_work_type(url, keywords):
                         if keyword in content_text:
                             return "developer"
                 return None
-    except Exception as e:
-        logging.error(f"게시글 처리 중 에러 발생: {e}")
+    except (aiohttp.ClientError, asyncio.TimeoutError) as e:
+        logger.error(f"게시글 처리 중 네트워크/타임아웃 에러 발생: {e}", exc_info=True)
         return None
 
 async def store_data_to_db(data_list, table_name):
@@ -177,7 +133,7 @@ async def store_data_to_db(data_list, table_name):
             # 이미 저장된 게시글인지 확인
             row = await pool.fetchrow(f"SELECT 1 FROM notice_bot.{table_name} WHERE record_key = $1", record_key)
             if row:
-                logging.info(f"이미 저장된 게시글 - KEY: {record_key}")
+                logger.info(f"이미 저장된 게시글 - KEY: {record_key}")
                 continue
 
             # 게시글 타입 확인
@@ -189,7 +145,7 @@ async def store_data_to_db(data_list, table_name):
                 VALUES ($1, $2, $3, $4, $5, $6, $7)
             """, record_key, current_timestamp, record["title"], record["url"], record["company"], record["deadline"], work_type)
 
-            logging.info(f"저장 완료 - KEY: {record_key}, 제목: {record['title']}, URL: {record['url']}")
+            logger.info(f"저장 완료 - KEY: {record_key}, 제목: {record['title']}, URL: {record['url']}")
 
             # 개발자 관련 공고인 경우 디스코드 알림
             if work_type:
@@ -214,24 +170,24 @@ async def main_async():
         # 추천 채용 페이지 크롤링
         recommend_list = await fetch_work_recommend()
         if recommend_list:
-            logging.info("추천 채용 페이지 - 추출된 데이터:")
+            logger.info("추천 채용 페이지 - 추출된 데이터:")
             for record in recommend_list:
-                logging.info(record)
+                logger.info(record)
             await store_data_to_db(recommend_list, 'work_recommend')
         else:
-            logging.warning("추천 채용 페이지 데이터를 추출하지 못했습니다.")
+            logger.warning("추천 채용 페이지 데이터를 추출하지 못했습니다.")
 
         # 일반 채용 페이지 크롤링
         general_list = await fetch_work_general()
         if general_list:
-            logging.info("일반 채용 페이지 - 추출된 데이터:")
+            logger.info("일반 채용 페이지 - 추출된 데이터:")
             for record in general_list:
-                logging.info(record)
+                logger.info(record)
             await store_data_to_db(general_list, 'work_general')
         else:
-            logging.warning("일반 채용 페이지 데이터를 추출하지 못했습니다.")
+            logger.warning("일반 채용 페이지 데이터를 추출하지 못했습니다.")
 
-        logging.info("5분 대기 중...")
+        logger.info("5분 대기 중...")
         await asyncio.sleep(300)
 
 def main():
